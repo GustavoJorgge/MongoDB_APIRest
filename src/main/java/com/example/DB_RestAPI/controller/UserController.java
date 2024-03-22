@@ -4,6 +4,7 @@ import com.example.DB_RestAPI.model.UserEntity;
 import com.example.DB_RestAPI.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.annotation.RequestScope;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class UserController {
     @GetMapping
     public List<UserEntity> obterTodos(){
         return userService.obterTodos();
-    }
+        }
 
     @GetMapping("/{id}")
     public UserEntity obterPorId(@PathVariable String id){
@@ -36,5 +37,30 @@ public class UserController {
     @DeleteMapping
     public void deletar(@PathVariable String id){
         userService.delete(id);
+    }
+
+    @GetMapping("/buscaPorNome/{nome}")
+    public List<UserEntity> buscarPorNome(@PathVariable String nome){
+        return userService.buscarPorNome(nome);
+    }
+
+    @GetMapping("/buscaPorEmail/{email}")
+    public List<UserEntity> buscarPorEmail(@PathVariable String email){
+        return userService.buscarPorEmail(email);
+    }
+
+    @GetMapping("/buscaPorNomeEEmail")
+    public List<UserEntity> buscaPorNomeEEmail(@RequestParam("nome") String nome, @RequestParam("email") String email){
+        return userService.buscaPorNomeEEmail(nome,email);
+    }
+
+    @GetMapping("/buscaPorNomeQueComecaCom/{prefixo}")
+    public List<UserEntity> buscaPorNomeQueComecaCom(@PathVariable String prefixo){
+        return userService.buscaPorNomeQueComecaCom(prefixo);
+    }
+
+    @GetMapping("/buscaPorNomeQueContem/{contem}")
+    public List<UserEntity> buscaUsuariosPorNomeQueContem(@PathVariable String contem) {
+        return userService.buscaPorNomeQueContem(contem);
     }
 }
